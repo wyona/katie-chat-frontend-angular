@@ -1,0 +1,9 @@
+<header id="header">
+  <div id="header-logo"><a href="#/"><img src="assets/images/yulup.svg" width="200px"/></a></div>
+  <nav id="header-nav">
+    <span *ngIf="username == null"><a [routerLink]="['/login']">Login</a></span>
+    <span *ngIf="username != null">Hello, {{username}}!&#160;<a [routerLink]="['/logout']">Logout</a></span>
+    <!--<a href="#/">About</a>-->
+    <span><a href="mailto:contact@wyona.com">Contact</a></span>
+  </nav>
+</header>

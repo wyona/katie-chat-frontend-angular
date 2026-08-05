@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": {
+      "host":"app.katie.qa",
+      "protocol":"https:",
+      "port":443
+    },
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel":"debug"
+  }
+}

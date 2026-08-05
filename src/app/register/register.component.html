@@ -1,0 +1,25 @@
+<div id="register">
+    <div *ngIf="registrationFailed">
+      <p style="color: red;">{{errorMsg}}</p>
+    </div>
+    <div *ngIf="registrationSuccessful">
+      <p>Thank you!</p>
+
+      <p>You will receive a confirmation link shortly to your email address <strong>{{email}}</strong> from Katie</p>
+
+      <p><img src="assets/images/katie.svg" width="200px"/></p>
+
+      <p>Please confirm this email to complete the registration.</p>
+
+      <p>Back to <a [routerLink]="['/']">homepage</a>.</p>
+    </div>
+    <form *ngIf="!registrationSuccessful">
+      <input #_email type="email" placeholder="Your email" class="heighttext" size="30"/>
+      <br/><br/>
+      <input #_first_name placeholder="First name" class="heighttext" size="30">
+      <br/><br/>
+      <input #_last_name placeholder="Last name" class="heighttext" size="30">
+      <br/><br/>
+      <button (click)="doRegister(_email.value, _first_name.value, _last_name.value)" type="submit">Sign up</button>
+    </form>
+</div>

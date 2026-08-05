@@ -1,0 +1,23 @@
+<div *ngIf="conversationStarters.length > 0" id="conversation-starters">
+  <button *ngFor="let starter of conversationStarters" (click)="sendSuggestion($event, starter.id)" class="suggestion">{{starter.suggestion}}</button>
+</div>
+<div *ngIf="conversationStarters.length == 0" id="conversation-starters">
+  <p>No conversation starters available.</p>
+</div>
+
+<div id="chat-container">
+  <div *ngIf="!responseReceived">
+    <app-loading-spinner [description]="'Generating response ...'"></app-loading-spinner>
+  </div>
+
+  <div class="messages" #messagesContainer>
+    <div *ngFor="let message of conversation"  [ngClass]="message.role">
+      <markdown>{{ message.content }}</markdown>
+    </div>
+  </div>
+  <button class="scroll-to-bottom" (click)="scrollToBottom()">&#8595;</button>
+  <form (submit)="sendMessage($event, messageInput.value)">
+    <textarea #messageInput [(ngModel)]="userMessage" name="userMessage" (keydown.enter)="handleEnterKey($event)" cols="100"></textarea>
+    <button type="submit">Send</button>
+  </form>
+</div>

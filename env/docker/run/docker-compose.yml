@@ -1,0 +1,8 @@
+services:
+  yulup-frontend:
+    image: wyona/private:yulup-frontend_1.8.0
+    #image: yulup-frontend
+    container_name: yulup-frontend
+    restart: always
+    ports:
+      - 8077:80

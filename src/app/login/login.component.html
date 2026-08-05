@@ -1,0 +1,20 @@
+<div id="login">
+    <div *ngIf="loginFailed">
+      <p style="color: red;">Login failed: {{loginFailedMsg}}</p>
+    </div>
+    <div *ngIf="loginSuccessful">
+      <p>Login successful, please <a href="/#/">continue chatting</a> ...</p>
+    </div>
+    <form>
+      <input #_username type="email" placeholder="Username" class="heighttext" size="30"/>
+      <br/><br/>
+      <input #_password type="password" (keydown.enter)="doLogin(_username.value, _password.value)" class="heighttext" size="30">
+      <br/><br/>
+      <button (click)="doLogin(_username.value, _password.value)" type="submit">Sign in</button>
+    </form>
+    <div style="margin-top: 40px;">
+      <a href="https://app.katie.qa/#/forgot-password" target="_blank">Forgot Password?</a>
+      <br/><br/>
+      <a [routerLink]="['/register']">Sign up</a>
+    </div>
+</div>
