@@ -11,16 +11,22 @@ export const environment = {
  apiUrlDISABLED_ALT_2: 'http://localhost:8044/api/v1/chat/completions/ROOT',
  apiUrlDISABLED_ALT_1: './api/v1/chat/completions/ROOT',
  useSSE: false,
+ loginUrl: './api/v1/auth/login?rememberMe=true',
  apiUrl: './api/v1/chat/completions/26cf31c2-8cb6-4e7e-9552-1c1f9f1ed035',
  useSSE_DISABLED: true,
  apiUrl_DISABLED: './api/v1/chat/completions',
  model: 'UNSET',
 
+ // LibreChat configuration
+ loginUrl_DISABLED_LC: 'http://localhost:3080/api/auth/login',
+ apiUrl_DISABLED_LC: 'http://localhost:3080/api/agents/chat/openAI',
+
  // OpenAI configuration
  apiKey__DISABLED: 'YOUR_API_KEY_HERE',
  baseUrl__DISABLED: 'https://api.openai.com/v1',
  useSSE__DISABLED: false,
- apiUrl__DISABLED: 'https://api.openai.com/v1/chat/completions',
+ loginUrl_DISABLED_O: 'NONE',
+ apiUrl__DISABLED_O: 'https://api.openai.com/v1/chat/completions',
  model__DISABLED: 'gpt-4o',
 
  temperature: 0.75,
