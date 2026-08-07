@@ -22,7 +22,7 @@ export const environment = {
  apiUrl_DISABLED_LC: 'http://localhost:3080/api/agents/chat/openAI',
 
  // OpenAI configuration
- apiKey__DISABLED: 'YOUR_API_KEY_HERE',
+ apiKey_DISABLED_O: 'YOUR_API_KEY_HERE',
  baseUrl__DISABLED: 'https://api.openai.com/v1',
  useSSE__DISABLED: false,
  loginUrl_DISABLED_O: 'NONE',
