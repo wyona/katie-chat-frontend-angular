@@ -199,6 +199,7 @@ export class HomeComponent {
                 this.conversation.push({ role: 'system', content: _message });
               } else if (_role == "error") {
                 this.conversation.push({ role: 'error', content: _message });
+                console.error("Error message received from server: " + _message);
               } else {
                 this.conversation.push({ role: 'error', content: "No such role '" + _role + "' supported!" });
               }
