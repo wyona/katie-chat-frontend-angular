@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComponentDataSharingService } from '../component-data-sharing.service';
+import { environment } from 'src/environments/environment';
 import { Username } from '../models/username.model';
+import { Token } from '../models/token.model';
 
 @Component({
   selector: 'app-login',
@@ -36,16 +38,23 @@ export class LoginComponent {
       })
     };
 
-    var apiUrl = "./api/v1/auth/login?rememberMe=true";
+    console.info("Try to login at " + environment.loginUrl);
 
-    this.httpClient.post(apiUrl, { email, password }, httpOptions)
+    this.httpClient.post(environment.loginUrl, { email, password }, httpOptions)
       .toPromise()
       .then(response => {
-        console.info("Login successfull.");
         this.loginFailed = false;
         this.loginSuccessful = true;
+
+        //var token = <Token>response;
+        //this.dataSharingService.username.next(email);
+        //this.dataSharingService.accessToken.next(token.token);
+        //console.info("Login successfull: " + token.token);
+
         var username = <Username>response;
         this.dataSharingService.username.next(username.username);
+        console.info("Login successfull: " + username.username);
+
         this.router.navigate(['/']);
       })
       .catch(response => {
