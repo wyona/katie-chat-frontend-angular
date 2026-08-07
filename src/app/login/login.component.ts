@@ -47,13 +47,13 @@ export class LoginComponent {
         this.loginSuccessful = true;
 
         //var token = <Token>response;
+        //console.info("Login successfull: " + token.token);
         //this.dataSharingService.username.next(email);
         //this.dataSharingService.accessToken.next(token.token);
-        //console.info("Login successfull: " + token.token);
 
         var username = <Username>response;
+        console.info("LoginComponent#doLogin(): Login successfull: " + username.username);
         this.dataSharingService.username.next(username.username);
-        console.info("Login successfull: " + username.username);
 
         this.router.navigate(['/']);
       })
