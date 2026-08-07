@@ -43,10 +43,10 @@ export class ChatGptService {
     var usage = "";
     var expectations = "";
 
-    var apiUrl = "./api/v1/self-register?h-captcha-response-token=" + "TODO";
+    var requestUrl = "./api/v1/self-register?h-captcha-response-token=" + "TODO";
 
     let promise = new Promise<void>((resolve, reject) => {
-      this.http.post(apiUrl, { email: email, firstName: firstname, lastName: lastname, language: language, linkedInUrl: linkedInUrl, howDidYouLearnAboutKatie: howDidYouLearnAboutKatie, howDoYouWantToUseKatie: usage, whatAreYourExpectations: expectations }, { responseType: 'json' })
+      this.http.post(requestUrl, { email: email, firstName: firstname, lastName: lastname, language: language, linkedInUrl: linkedInUrl, howDidYouLearnAboutKatie: howDidYouLearnAboutKatie, howDoYouWantToUseKatie: usage, whatAreYourExpectations: expectations }, { responseType: 'json' })
         .toPromise()
         .then(response => {
           //alert("DEBUG: Self-registration successful");
@@ -83,11 +83,11 @@ export class ChatGptService {
     }
 */
 
-    var apiUrl = "./api/v1/learning-coach/conversation-starters";
+    var requestUrl = "./api/v1/learning-coach/conversation-starters";
 
-    console.info("ChatGptService#getConversationStarters(): Get conversation starters '" + apiUrl + "' ...");
+    console.info("ChatGptService#getConversationStarters(): Get conversation starters '" + requestUrl + "' ...");
     let promise = new Promise((resolve, reject) => {
-      this.http.get(apiUrl, { headers })
+      this.http.get(requestUrl, { headers })
         .toPromise()
         .then(response => {
           var starters = <ConversationStarter[]>response;
