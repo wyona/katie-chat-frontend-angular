@@ -32,14 +32,14 @@ export class HeaderComponent {
   }
 
   /**
-   *
+   * Get user information (assuming that user is signed-in by session)
    */
   getUser(): void {
     //alert("DEBUG: Get user information ...");
     console.info("HeaderComponent#getUser(): Get user information ...");
-    var apiUrl = "./api/v1/auth/user";
+    var requestUrl = "./api/v1/auth/user";
 
-    this.httpClient.get(apiUrl, { responseType: 'json' })
+    this.httpClient.get(requestUrl, { responseType: 'json' })
       .toPromise()
       .then(response => {
         this.user = <User>response;
@@ -61,7 +61,7 @@ export class HeaderComponent {
   }
 
   /**
-   *
+   * Get access token (assuming that user is signed-in by session)
    */
   getAccessToken(): void {
     //alert("DEBUG: Get access token ...");
@@ -73,9 +73,9 @@ export class HeaderComponent {
       })
     };
 
-    var apiUrl = "./api/v1/auth/token/myself?addProfile=false&seconds=3600";
+    var requestUrl = "./api/v1/auth/token/myself?addProfile=false&seconds=3600";
 
-    this.httpClient.post(apiUrl, httpOptions)
+    this.httpClient.post(requestUrl, httpOptions)
       .toPromise()
       .then(response => {
         console.info("HeaderComponent#getAccessToken(): Get access token successfull.");
