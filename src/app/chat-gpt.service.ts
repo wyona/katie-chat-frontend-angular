@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ComponentDataSharingService } from './component-data-sharing.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChatResponse } from './models/chat-response.model';
@@ -24,10 +25,15 @@ import { OpenAI } from 'openai';
 })
 export class ChatGptService {
 
+  accessToken: string | null = null;
+
   /**
    *
    */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dataSharingService: ComponentDataSharingService) {
+    this.dataSharingService.accessToken.subscribe( value => {
+      this.accessToken = value;
+    });
   }
 
   /**
@@ -79,7 +85,7 @@ export class ChatGptService {
     if (environment.apiKey != null) {
       headers['Authorization'] = 'Bearer ' + environment.apiKey;
     } else {
-      console.warn("No API key configured.");
+      console.warn("Neither API key configured nor access token available, assuming a session already exists.");
     }
 */
 
@@ -134,19 +140,16 @@ export class ChatGptService {
     type Headers = {[key: string] : any};
     const headers: Headers = {};
     headers['Content-Type'] = 'application/json';
-/* INFO: We use session instead API key
     if (environment.apiKey != null) {
+      console.info("ChatGptService#chat(): Use API key.");
       headers['Authorization'] = 'Bearer ' + environment.apiKey;
+    } else if (this.accessToken != null && this.accessToken.length > 0) {
+      console.info("ChatGptService#chat(): Use access token.");
+      console.info("ChatGptService#chat(): Access token: " + this.accessToken);
+      headers['Authorization'] = 'Bearer ' + this.accessToken;
     } else {
-      console.warn("No API key configured.");
+      console.info("ChatGptService#chat(): Neither API key configured nor access token available, assuming a session already exists.");
     }
-*/
-/*
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${environment.apiKey}` // see note on top
-    };
-*/
 
     console.info("ChatGptService#chat(): Send request to '" + environment.apiUrl + "' ...");
 
