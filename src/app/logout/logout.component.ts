@@ -30,9 +30,9 @@ export class LogoutComponent {
       })
     };
 
-    var apiUrl = "./api/v1/auth/logout";
+    var requestUrl = "./api/v1/auth/logout";
 
-    this.httpClient.get(apiUrl, httpOptions)
+    this.httpClient.get(requestUrl, httpOptions)
       .toPromise()
       .then(response => {
         console.info("Logout successful");
