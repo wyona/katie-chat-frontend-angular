@@ -11,7 +11,7 @@ export const environment = {
  apiUrlDISABLED_ALT_2: 'http://localhost:8044/api/v1/chat/completions/ROOT',
  apiUrlDISABLED_ALT_1: './api/v1/chat/completions/ROOT',
  useSSE: false,
- loginUrl: './api/v1/auth/login?rememberMe=true',
+ loginUrl: './api/v1/auth/login?rememberMe=false&accessToken=true',
  apiUrl: './api/v1/chat/completions/26cf31c2-8cb6-4e7e-9552-1c1f9f1ed035',
  useSSE_DISABLED: true,
  apiUrl_DISABLED: './api/v1/chat/completions',
