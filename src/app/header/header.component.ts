@@ -1,90 +1,105 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ComponentDataSharingService } from '../component-data-sharing.service';
 import { User } from '../models/user.model';
 import { AccessToken } from '../models/access-token.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   username: string | null = null;
   user: User | null = null;
+  
+  // Keep long lived subscription even if the component dies, because user might switch to another page
+  private serviceSubscription: Subscription = new Subscription();
 
-  /**
-   *
-   */
-  constructor(private httpClient: HttpClient, private dataSharingService: ComponentDataSharingService) {
-    this.getUser();
+  constructor(
+    private httpClient: HttpClient, 
+    private dataSharingService: ComponentDataSharingService
+  ) {}
 
-    this.dataSharingService.username.subscribe( value => {
-      this.username = value;
-      if (this.username != null) {
-        this.getAccessToken();
-      } else {
-        console.info("HeaderComponent(): User not authenticated yet.");
+  ngOnInit(): void {
+    // Try to load user when class is initialized
+    //this.getUser();
+
+    // React to changes of Service-value
+    const usernameSub = this.dataSharingService.username.subscribe({
+      next: (value) => {
+        this.username = value;
+        if (this.username != null) {
+          console.info("HeaderComponent: Username changed: " + this.username);
+          //this.getAccessToken();
+        } else {
+          console.info("HeaderComponent: No username available.");
+          //console.info("HeaderComponent: Do not get access token, because user not authenticated yet.");
+        }
       }
     });
+    
+    this.serviceSubscription.add(usernameSub);
+  }
+
+  ngOnDestroy(): void {
+    this.serviceSubscription.unsubscribe();
   }
 
   /**
    * Get user information (assuming that user is signed-in by session)
    */
   getUser(): void {
-    //alert("DEBUG: Get user information ...");
-    console.info("HeaderComponent#getUser(): Get user information ...");
-    var requestUrl = "./api/v1/auth/user";
+    alert("DEBUG: Get user details ...");
+    console.info("HeaderComponent#getUser(): Get user details ...");
+    const requestUrl = "./api/v1/auth/user";
 
-    this.httpClient.get(requestUrl, { responseType: 'json' })
-      .toPromise()
-      .then(response => {
-        this.user = <User>response;
+    this.httpClient.get<User>(requestUrl).subscribe({
+      next: (response) => {
+        this.user = response;
         this.username = this.user.username;
-        //alert("Username: " + this.username);
-        console.info("HeaderComponent#getUser(): Username: " + this.username + ", E-Mail: " + this.user.email);
+        console.info(`HeaderComponent#getUser(): Username: ${this.username}, E-Mail: ${this.user.email}`);
+        
+        // Trigger DataSharingService
         this.dataSharingService.username.next(this.username);
-      })
-      .catch(response => {
-        //alert("Not authenticated yet.");
-        var error = <Error>response.error; // INFO: This works, because we use httpClient instead http
+      },
+      error: (response) => {
+        const error = response.error as Error;
         if (response.status === 403) {
           console.info("HeaderComponent#getUser(): User not authenticated yet, therefore user object not available.");
         } else {
-          console.error("HeaderComponent#getUser(): Response status: " + response.status);
-          alert("An error occured: " + error.message);
+          console.error(`HeaderComponent#getUser(): Response status: ${response.status}`);
+          alert(`An error occurred: ${error?.message || response.message}`);
         }
-      });
+      }
+    });
   }
 
   /**
    * Get access token (assuming that user is signed-in by session)
    */
   getAccessToken(): void {
-    //alert("DEBUG: Get access token ...");
+    alert("DEBUG: Get access token ...");
     console.info("HeaderComponent#getAccessToken(): Get access token ...");
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
 
-    var requestUrl = "./api/v1/auth/token/myself?addProfile=false&seconds=3600";
+    const requestUrl = "./api/v1/auth/token/myself?addProfile=false&seconds=3600";
 
-    this.httpClient.post(requestUrl, httpOptions)
-      .toPromise()
-      .then(response => {
-        console.info("HeaderComponent#getAccessToken(): Get access token successfull.");
-        var accessToken = <AccessToken>response;
-        //alert("DEBUG: Access token: " + accessToken.access_token);
-        this.dataSharingService.accessToken.next(accessToken.access_token);
-      })
-      .catch(response => {
-        console.warn("HeaderComponent#getAccessToken(): Get access token failed: Response status: " + response.status);
-      });
+    this.httpClient.post<AccessToken>(requestUrl, {}, httpOptions).subscribe({
+      next: (response) => {
+        console.info("HeaderComponent#getAccessToken(): Get access token successful.");
+        this.dataSharingService.accessToken.next(response.access_token);
+      },
+      error: (response) => {
+        console.warn(`HeaderComponent#getAccessToken(): Get access token failed: Response status: ${response.status}`);
+      }
+    });
   }
 }
