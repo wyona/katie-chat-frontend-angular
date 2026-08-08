@@ -46,16 +46,16 @@ export class LoginComponent {
         this.loginFailed = false;
         this.loginSuccessful = true;
 
-        // LibreChat
-        //var token = <Token>response;
-        //console.info("Login successfull: " + token.token);
-        //this.dataSharingService.username.next(email);
-        //this.dataSharingService.accessToken.next(token.token);
+        // LibreChat and Katie (1.383.0-SNAPSHOT)
+        var token = <Token>response;
+        console.info("Login successfull: " + token.token);
+        this.dataSharingService.username.next(email);
+        this.dataSharingService.accessToken.next(token.token);
 
         // Katie
-        var username = <Username>response;
-        console.info("LoginComponent#doLogin(): Login successfull: " + username.username);
-        this.dataSharingService.username.next(username.username);
+        //var username = <Username>response;
+        //console.info("LoginComponent#doLogin(): Login successfull: " + username.username);
+        //this.dataSharingService.username.next(username.username);
 
         this.router.navigate(['/']);
       })
