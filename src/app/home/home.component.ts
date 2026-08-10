@@ -159,10 +159,12 @@ export class HomeComponent {
   }
 
   /**
-   * Send message to LLM
+   * Send message to agent / LLM
    */
   sendRequestToLLM(messages: Array<Message>, chosenSuggestion: {type: string; index: string} | null) {
+    console.info("HomeComponent#sendRequestToLLM(): See message to agent / LLM ...");
     if (environment.useSSE) {
+      console.info("HomeComponent#sendRequestToLLM(): Use Server-Sent Events ...");
       this.stream(messages, chosenSuggestion).then(response => {
           console.info("HomeComponent#sendRequestToLLM(): Complete Response: " + response);
           // INFO: Push when complete response received
