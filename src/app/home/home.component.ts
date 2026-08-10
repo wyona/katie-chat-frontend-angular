@@ -45,7 +45,7 @@ export class HomeComponent {
    * Stream response using SSE: https://www.npmjs.com/package/openai
    */
   async stream(messages: Array<Message>, chosenSuggestion: {type: string; index: string} | null): Promise<any> {
-    console.info("Stream response using SSE ...");
+    console.info("HomeComponent#stream(): Stream response using SSE (Base URL: " + environment.baseUrl +") ...");
 
     var _apiKey = this.accessToken;
     if (environment.apiKey != null) {
