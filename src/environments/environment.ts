@@ -12,6 +12,7 @@ export const environment = {
  apiUrlDISABLED_ALT_1: './api/v1/chat/completions/ROOT',
  useSSE: false,
  loginUrl: './api/v1/auth/login?rememberMe=false&accessToken=true',
+ logoutUrl: './api/v1/auth/logout',
  apiUrl: './api/v1/chat/completions/26cf31c2-8cb6-4e7e-9552-1c1f9f1ed035',
  useSSE_DISABLED: true,
  apiUrl_DISABLED: './api/v1/chat/completions',
@@ -19,6 +20,7 @@ export const environment = {
 
  // LibreChat configuration
  loginUrl_DISABLED_LC: 'http://localhost:3080/api/auth/login',
+ logoutUrl_DISABLED_LC: 'http://localhost:3080/api/auth/logout',
  apiUrl_DISABLED_LC: 'http://localhost:3080/api/agents/chat/openAI',
 
  // OpenAI configuration
