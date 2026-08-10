@@ -6,6 +6,7 @@ export const environment = {
  production: false,
 
  // Katie configuration (When SSE enabled, then make sure to login before asking a question)
+/*
  apiKey: null,
  baseUrlSSE: 'http://localhost:8044/api/v1',
  useSSE: false,
@@ -13,17 +14,17 @@ export const environment = {
  logoutUrl: './api/v2/auth/logout',
  apiUrl: './api/v1/chat/completions/26cf31c2-8cb6-4e7e-9552-1c1f9f1ed035',
  model: 'UNSET',
+*/
 
  // LibreChat configuration
-/*
  apiKey: null,
  model: 'UNSET',
  loginUrl: 'http://localhost:3080/api/auth/login',
  logoutUrl: 'http://localhost:3080/api/auth/logout',
- baseUrlSSE: 'http://localhost:3080/api/agents',
+ // https://www.librechat.ai/docs/features/agents_api
+ baseUrlSSE: 'http://localhost:3080/api/agents/v1',
  apiUrl: 'http://localhost:3080/api/agents/chat/openAI',
  useSSE: true,
-*/
 
  // OpenAI configuration
 /*
