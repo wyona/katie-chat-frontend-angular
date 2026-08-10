@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ComponentDataSharingService } from '../component-data-sharing.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-logout',
@@ -11,10 +12,16 @@ import { ComponentDataSharingService } from '../component-data-sharing.service';
 })
 export class LogoutComponent {
 
+  accessToken: string | null = null;
+
   /**
    *
    */
-  constructor(private router: Router, private dataSharingService: ComponentDataSharingService, private httpClient: HttpClient) {
+  constructor(private router: Router, private dataSharingService: ComponentDataSharingService, private http: HttpClient) {
+    this.dataSharingService.accessToken.subscribe( value => {
+      this.accessToken = value;
+    });
+
     this.doLogout();
   }
 
@@ -24,15 +31,15 @@ export class LogoutComponent {
   doLogout(): void {
     console.info("Logout ...");
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
+    type Body = {[key: string] : any};
+    const body: Body = {};
 
-    var requestUrl = "./api/v1/auth/logout";
+    type Headers = {[key: string] : any};
+    const headers: Headers = {};
+    headers['Content-Type'] = 'application/json';
+    headers['Authorization'] = 'Bearer ' + this.accessToken;
 
-    this.httpClient.get(requestUrl, httpOptions)
+    this.http.post(environment.logoutUrl, body, { headers })
       .toPromise()
       .then(response => {
         console.info("Logout successful");
