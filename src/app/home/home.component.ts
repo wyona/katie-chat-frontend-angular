@@ -53,7 +53,8 @@ export class HomeComponent {
       _apiKey = environment.apiKey;
     }
     if (this.accessToken != null && this.accessToken.length > 0) {
-      alert("DEBUG: Access token: " + this.accessToken);
+      // Unfortunately LibreChat does not accept the user access token, but one has to set an Agent-API key per user (see user settings)
+      //alert("DEBUG: Access token: " + this.accessToken);
       //_apiKey = this.accessToken;
     }
 
