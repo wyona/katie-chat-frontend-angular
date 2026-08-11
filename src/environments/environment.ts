@@ -17,8 +17,8 @@ export const environment = {
 */
 
  // LibreChat configuration
- apiKey: null,
- model: 'UNSET',
+ apiKey: 'com_ui_agent_api_keys',
+ model: 'agent_78t8A2KJQLckT4xphXLO7',
  loginUrl: 'http://localhost:3080/api/auth/login',
  logoutUrl: 'http://localhost:3080/api/auth/logout',
  // https://www.librechat.ai/docs/features/agents_api
