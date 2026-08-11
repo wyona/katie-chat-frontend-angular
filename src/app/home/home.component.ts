@@ -52,6 +52,10 @@ export class HomeComponent {
       alert("DEBUG: API Key: " + environment.apiKey);
       _apiKey = environment.apiKey;
     }
+    if (this.accessToken != null && this.accessToken.length > 0) {
+      alert("DEBUG: Access token: " + this.accessToken);
+      //_apiKey = this.accessToken;
+    }
 
     const client = new OpenAI({
       apiKey: _apiKey,
@@ -94,7 +98,7 @@ export class HomeComponent {
     //const stream = client!.chat.completions.create(body);
     const stream = client!.chat.completions
       .create({
-        model: 'gpt-4o',
+        model: environment.model,
         messages: openAIMessages,
         temperature: environment.temperature,
         stream: true,
